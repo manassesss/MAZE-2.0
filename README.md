@@ -26,12 +26,14 @@ This is a second version of a personal app to my mom administrate your work, [Ma
 
 For now, two flows have been thought of when using the app. The inventory control flow and the order scheduling flow.
 
+### Inventory Control Flow
 Regarding stock control, it will be possible to register, as well as edit an item in the stock of products used in the production of any of the products produced by Mazé. In addition, it will be possible to view these items through a simple listing.
 
 <h1 align="center">
     <img alt="stock" title="stock" src="https://github.com/manassesss/try-repo/blob/main/Stock%20flow.png"/>
 </h1>
 
+### Order Scheduling Flow
 Orders can be scheduled and organized according to the type of event. In this flow, the information requested to add or edit an order is still being reviewed, but for now, only that information is being allocated.
 
 <h1 align="center">
