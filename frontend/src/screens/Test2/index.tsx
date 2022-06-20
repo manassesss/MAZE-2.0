@@ -1,12 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Routes from './src/routes';
 
-export default function App() {
+export default function Test2() {
   return (
-    <View style={{ flex:1} }>
-      <StatusBar style="auto" />
-      <Routes/>
+    <View style={styles.container}>
+      <Text>Casa 2</Text>
     </View>
   );
 }
