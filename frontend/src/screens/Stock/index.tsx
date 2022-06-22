@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, ActivityIndicator, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Image, ActivityIndicator, FlatList, Animated } from 'react-native';
 import { Dimensions } from 'react-native'
 import React from 'react'
 import ButtonAdd from '../../components/ButtonAdd'
@@ -15,9 +15,11 @@ import {
 } from '@expo-google-fonts/open-sans';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-
+const { height } = Dimensions.get("screen");
+const SIZE_ITEM = 70 + 20 * 2
 
 export default function Stock() {
+  const scrollY = React.useRef(new Animated.Value(0)).current;
   let [fontsLoaded] = useFonts({
     JosefinSans_600SemiBold,
     JosefinSans_700Bold,
@@ -48,15 +50,50 @@ export default function Stock() {
           </View>
         </View>
         <View style={styles.listContainer}>
-          <FlatList
+          <Animated.FlatList
+          ListFooterComponentStyle={{flex:1, height: height*0.08}}
+          ListFooterComponent={<View/>}
           style={styles.flatlistContainer}
           showsVerticalScrollIndicator={false}
           data={stockList}
-          renderItem={({ item, index }) =>
-            <ProductItem
-            onPress={()=> {console.log(item.name)}}
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y:scrollY}}}], 
+            {useNativeDriver: true}
+          )
+          }
+          renderItem={({ item, index }) => {
+
+            const inputRange = [
+              -1,
+              0,
+              SIZE_ITEM * index,
+              SIZE_ITEM * (index + 1),
+            ];
+            const opacityInputRange = [
+              -1,
+              0,
+              SIZE_ITEM * index,
+              SIZE_ITEM * (index + 0.5),
+            ];
+            const scale = scrollY.interpolate({
+              inputRange,
+              outputRange: [1, 1, 1, 0],
+            });;
+            const opacity = scrollY.interpolate({
+              inputRange: opacityInputRange,
+              outputRange: [1, 1, 1, 0],
+            });
+            return (
+              <ProductItem
+              scale={scale}
+
+              opacity={opacity}
+              onPress={()=> {console.log(item.name)}}
               item={item} />
-          }/>
+            );
+
+          }}
+          />
         </View>
       </SafeAreaView>
     );
@@ -69,14 +106,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F07B77',
   },
   listContainer: {
-    paddingTop: SCREEN_WIDTH * 0.05,
+    //paddingTop: SCREEN_WIDTH * 0.05,
     backgroundColor: '#F5f5f5',
     flex: 1,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   flatlistContainer: {
-    marginHorizontal: SCREEN_WIDTH * 0.05,
+    marginHorizontal: SCREEN_WIDTH * 0.05, 
   },
   headContainer: {
     marginTop: SCREEN_WIDTH * 0.05,
