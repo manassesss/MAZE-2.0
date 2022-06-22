@@ -1,7 +1,9 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Image, ActivityIndicator, FlatList } from 'react-native';
 import { Dimensions } from 'react-native'
+import React from 'react'
 import ButtonAdd from '../../components/ButtonAdd'
-
+import ProductItem from '../../components/ProductItem';
+import { stockList } from '../../services/stock';
 import {
   useFonts,
   JosefinSans_600SemiBold,
@@ -14,6 +16,7 @@ import {
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
+
 export default function Stock() {
   let [fontsLoaded] = useFonts({
     JosefinSans_600SemiBold,
@@ -21,6 +24,7 @@ export default function Stock() {
     OpenSans_400Regular,
     OpenSans_700Bold,
   });
+
   if (!fontsLoaded) {
     return <ActivityIndicator size="small" color="#F07B77"/>
   } else {
@@ -44,7 +48,15 @@ export default function Stock() {
           </View>
         </View>
         <View style={styles.listContainer}>
-  
+          <FlatList
+          style={styles.flatlistContainer}
+          showsVerticalScrollIndicator={false}
+          data={stockList}
+          renderItem={({ item, index }) =>
+            <ProductItem
+            onPress={()=> {console.log(item.name)}}
+              item={item} />
+          }/>
         </View>
       </SafeAreaView>
     );
@@ -57,10 +69,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F07B77',
   },
   listContainer: {
+    paddingTop: SCREEN_WIDTH * 0.05,
     backgroundColor: '#F5f5f5',
     flex: 1,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+  },
+  flatlistContainer: {
+    marginHorizontal: SCREEN_WIDTH * 0.05,
   },
   headContainer: {
     marginTop: SCREEN_WIDTH * 0.05,
