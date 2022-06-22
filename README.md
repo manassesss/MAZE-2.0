@@ -68,4 +68,4 @@ The design can be accessed at the following link:
     </tr>
 </table>
 
-[figma]: https://www.figma.com/file/zncGxGUAKSOkLLqfmD1ah5/MAZÉ?node-id=0%3A1
+[figma]: https://www.figma.com/file/eBzaUnpamXQPxxytmRqXbX/MAZE-2.0?node-id=0%3A1
