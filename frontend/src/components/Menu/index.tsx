@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Dimensions } from 'react-native'
 import Test from '../../screens/Test';
-import Test2 from '../../screens/Test2';
+import Stock from '../../screens/Stock';
 import Test3 from '../../screens/Test3';
 
 type RoutesList = {
@@ -77,7 +77,7 @@ export default function Menu() {
                 tabBarLabel: 'Agenda',
                 }} 
             />
-            <Tab.Screen name="Stock" component={Test2} options={{
+            <Tab.Screen name="Stock" component={Stock} options={{
                 tabBarLabel: 'Estoque',
                 }} 
             />
