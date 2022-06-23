@@ -86,7 +86,6 @@ export default function Stock() {
             return (
               <ProductItem
               scale={scale}
-
               opacity={opacity}
               onPress={()=> {console.log(item.name)}}
               item={item} />
