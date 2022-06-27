@@ -50,7 +50,7 @@ const StockForm = () => {
 
   const onFinish = () => {
     console.log(amount);
-    nav.navigate("Stock");
+    nav.navigate("Menu");
   };
 
   const addAmount = () => {
