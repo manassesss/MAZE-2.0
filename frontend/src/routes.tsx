@@ -1,12 +1,14 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Menu from './components/Menu'
-import Stock from './screens/Stock'
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Menu from "./components/Menu";
+import Stock from "./screens/Stock";
+import StockForm from "./screens/StockForm";
 
 type RootStackParamList = {
-    Menu: undefined;
-    Stock: undefined;
+  Menu: undefined;
+  Stock: undefined;
+  StockForm: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -14,14 +16,15 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function Routes() {
   return (
     <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-            <Stack.Screen name='Menu' component={Menu}/> 
-            <Stack.Screen name='Stock' component={Stock}/>   
-        </Stack.Navigator> 
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="Stock" component={Stock} />
+        <Stack.Screen name="StockForm" component={StockForm} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
