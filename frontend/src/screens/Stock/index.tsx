@@ -5,12 +5,14 @@ import {
   View,
   Image,
   Animated,
+  Modal,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import ButtonAdd from "../../components/ButtonAdd";
 import ProductItem from "../../components/ProductItem";
+import Alert from "../../components/Alert";
 import { stockList } from "../../services/stock";
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -32,7 +34,18 @@ type StockScreenProp = CompositeNavigationProp<
 export default function Stock() {
   const scrollY = React.useRef(new Animated.Value(0)).current;
   const nav = useNavigation<StockScreenProp>();
+  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [itemToDelete, setItemToDelete] = React.useState<any>();
 
+  const handleModalVisible = (item: unknown) => {
+    setItemToDelete(item);
+    setModalVisible(true);
+  };
+
+  const handleDelete = () => {
+    console.log("deletamos");
+  };
   const navToAdd = () => {
     nav.navigate("StockForm");
   };
@@ -89,13 +102,18 @@ export default function Stock() {
               <ProductItem
                 scale={scale}
                 opacity={opacity}
-                onPress={() => {
-                  console.log(item.name);
-                }}
+                onPress={() => handleModalVisible(item)}
                 item={item}
               />
             );
           }}
+        />
+        <Alert
+          visible={modalVisible}
+          close={() => setModalVisible(false)}
+          onConfirm={handleDelete}
+          title={"Atenção!"}
+          content="Você tem certeza de que deseja excluir este item do stock?"
         />
       </View>
     </SafeAreaView>
