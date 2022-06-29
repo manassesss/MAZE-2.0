@@ -12,14 +12,26 @@ import React from "react";
 import ButtonAdd from "../../components/ButtonAdd";
 import ProductItem from "../../components/ProductItem";
 import { stockList } from "../../services/stock";
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const { height } = Dimensions.get("screen");
 const SIZE_ITEM = 70 + 20 * 2;
+type RoutesList = {
+  StockForm: undefined;
+  Menu: undefined;
+};
+
+type StockScreenProp = CompositeNavigationProp<
+  StackNavigationProp<RoutesList, "Menu">,
+  BottomTabNavigationProp<RoutesList, "StockForm">
+>;
 
 export default function Stock() {
   const scrollY = React.useRef(new Animated.Value(0)).current;
-  const nav = useNavigation();
+  const nav = useNavigation<StockScreenProp>();
 
   const navToAdd = () => {
     nav.navigate("StockForm");
@@ -97,6 +109,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     //paddingTop: SCREEN_WIDTH * 0.05,
+    flex: 1,
     backgroundColor: "#F5f5f5",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,

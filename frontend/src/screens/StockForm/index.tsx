@@ -16,6 +16,19 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import { MaskedTextInput } from "react-native-mask-text";
 import { Dimensions } from "react-native";
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+
+type RoutesList = {
+  StockForm: undefined;
+  Menu: undefined;
+};
+
+type MenuScreenProp = CompositeNavigationProp<
+  StackNavigationProp<RoutesList, "StockForm">,
+  BottomTabNavigationProp<RoutesList, "Menu">
+>;
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const { width } = Dimensions.get("screen");
@@ -46,10 +59,9 @@ const StockForm = () => {
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
-  const nav = useNavigation();
+  const nav = useNavigation<MenuScreenProp>();
 
   const onFinish = () => {
-    console.log(amount);
     nav.navigate("Menu");
   };
 

@@ -4,8 +4,9 @@ import React from "react";
 import ButtonIcon from "../ButtonIcon";
 
 interface Item {
+  id: number;
   name: string;
-  amount: string;
+  amount: number;
   price: string;
 }
 
@@ -15,8 +16,8 @@ const { width, height } = Dimensions.get("screen");
 type Props = {
   onPress: () => void;
   item: Item;
-  scale: number;
-  opacity: number;
+  scale: Animated.AnimatedInterpolation;
+  opacity: Animated.AnimatedInterpolation;
 };
 
 const ProductItem: React.FC<Props> = ({ onPress, item, scale, opacity }) => (
