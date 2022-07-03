@@ -2,9 +2,9 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Dimensions } from "react-native";
-import Test from "../../screens/Test";
 import Stock from "../../screens/Stock";
 import Test3 from "../../screens/Test3";
+import Schedule from "../../screens/Schedule";
 
 type RoutesList = {
   Stock: undefined;
@@ -60,7 +60,7 @@ export default function Menu() {
     >
       <Tab.Screen
         name="Schedule"
-        component={Test}
+        component={Schedule}
         options={{
           tabBarLabel: "Agenda",
         }}

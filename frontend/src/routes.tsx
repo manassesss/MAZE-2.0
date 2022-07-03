@@ -4,11 +4,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Menu from "./components/Menu";
 import Stock from "./screens/Stock";
 import StockForm from "./screens/StockForm";
+import Schedule from "./screens/Schedule";
 
 type RootStackParamList = {
   Menu: undefined;
   Stock: undefined;
   StockForm: undefined;
+  Schedule: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -24,6 +26,7 @@ export default function Routes() {
         <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="Stock" component={Stock} />
         <Stack.Screen name="StockForm" component={StockForm} />
+        <Stack.Screen name="Schedule" component={Schedule} />
       </Stack.Navigator>
     </NavigationContainer>
   );
