@@ -35,21 +35,29 @@ const ScheduleItem: React.FC<Props> = ({ onPress, item }) => {
           <View style={[styles.itemContainer]}>
             <Text style={styles.titleText}>{element.clientName}</Text>
             <View
-              style={[
-                styles.tagContainer,
-                { backgroundColor: element.eventType?.color },
-              ]}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
-              <Text style={[styles.titleText, { color: "#FFFFFF" }]}>
-                {element.eventType?.name}
-              </Text>
+              <View
+                style={[
+                  styles.tagContainer,
+                  { backgroundColor: element.eventType?.color },
+                ]}
+              >
+                <Text style={[styles.titleText, { color: "#FFFFFF" }]}>
+                  {element.eventType?.name}
+                </Text>
+              </View>
+              <Ionicons
+                name="trash"
+                size={24}
+                color="#F07B77"
+                onPress={onPress}
+              />
             </View>
-            <Ionicons
-              name="trash"
-              size={24}
-              color="#F07B77"
-              onPress={onPress}
-            />
           </View>
         </View>
       );

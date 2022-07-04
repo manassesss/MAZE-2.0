@@ -23,13 +23,13 @@ const { height } = Dimensions.get("screen");
 const SIZE_ITEM = 70 + 20 * 2;
 
 type RoutesList = {
-  StockForm: undefined;
+  ScheduleForm: undefined;
   Menu: undefined;
 };
 
 type StockScreenProp = CompositeNavigationProp<
   StackNavigationProp<RoutesList, "Menu">,
-  BottomTabNavigationProp<RoutesList, "StockForm">
+  BottomTabNavigationProp<RoutesList, "ScheduleForm">
 >;
 
 export default function Schedule() {
@@ -54,7 +54,7 @@ export default function Schedule() {
     console.log(Object.keys(scheduleDict).length);
   };
   const navToAdd = () => {
-    nav.navigate("StockForm");
+    nav.navigate("ScheduleForm");
   };
 
   function obterDia(dia: string, abreviado?: boolean) {

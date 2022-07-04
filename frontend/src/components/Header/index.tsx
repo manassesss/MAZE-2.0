@@ -24,7 +24,7 @@ const Header = ({ children }: Props) => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "transparent",
     height: height * 0.07,
     padding: width * 0.05,
     marginBottom: height * 0.02,
