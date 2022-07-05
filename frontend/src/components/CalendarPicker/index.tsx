@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Animated, TextComponent } from "react-native";
 import { Dimensions } from "react-native";
-import moment, { Moment } from "moment";
+import moment, { Moment, months } from "moment";
 import React from "react";
 import ButtonIcon from "../ButtonIcon";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,7 +14,21 @@ type Props = {
 };
 
 const CalendarPicker: React.FC<Props> = ({ item }) => {
-  function obterDia(dia: string, abreviado?: boolean) {
+  const months = [
+    "janeiro",
+    "fevereiro",
+    "março",
+    "abril",
+    "maio",
+    "junho",
+    "julho",
+    "agosto",
+    "setembro",
+    "outubro",
+    "novembro",
+    "dezembro",
+  ];
+  function obterDia(dia: string, date: Date, abreviado?: boolean) {
     const days = [
       "Domingo",
       "Segunda",
@@ -27,19 +41,8 @@ const CalendarPicker: React.FC<Props> = ({ item }) => {
 
     const days_abreviado = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-    const options = { weekday: "short", month: "long", day: "numeric" };
-
-    if (!abreviado) {
-      const data = moment(dia, "DD/MM/YYYY");
-      const das = data.toDate();
-      //return dayName + ', ' + dia.split('/')[1] + ' de ' + meses[d.getMonth()];
-      return days[das.getDay()];
-      //return moment(dia).format('DD/MMM/YYYY');
-    } else {
-      const d = new Date(dia);
-      const dayName = days_abreviado[d.getDay()];
-      return dayName;
-    }
+    const dayName = days_abreviado[date.getDay()];
+    return dayName;
   }
   function getAllDaysInMonth(year: number, month: number) {
     const date = new Date(year, month, 1);
@@ -50,11 +53,14 @@ const CalendarPicker: React.FC<Props> = ({ item }) => {
     }
     return dates;
   }
-  const itemCalendar = (date: Date) => {
+  const itemMonthsCalendar = (month: string) => {
+    return <Text style={[styles.textItem3]}>{month}</Text>;
+  };
+  const itemDaysCalendar = (date: Date) => {
     return (
       <View style={[styles.container]}>
         <Text style={styles.textItem2}>
-          {obterDia(moment(date).format("DD/MM/YYYY"), true)}
+          {obterDia(moment(date).format("DD/MM/YYYY"), date, true)}
         </Text>
         <Text style={styles.textItem}>{moment(date).format("DD")}</Text>
       </View>
@@ -64,11 +70,23 @@ const CalendarPicker: React.FC<Props> = ({ item }) => {
   return (
     <View>
       <FlatList
+        data={months}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => {
+          return <View>{itemMonthsCalendar(item)}</View>;
+        }}
+      />
+      <FlatList
         data={getAllDaysInMonth(item.getFullYear(), item.getMonth())}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
-          return <View>{itemCalendar(item)}</View>;
+          return (
+            <View style={{ marginEnd: SCREEN_WIDTH * 0.05 }}>
+              {itemDaysCalendar(item)}
+            </View>
+          );
         }}
       />
     </View>
@@ -95,6 +113,14 @@ const styles = StyleSheet.create({
     opacity: 0.62,
     fontSize: 16,
     fontFamily: "OpenSans_700Bold",
+  },
+  textItem3: {
+    color: "#373737",
+    opacity: 0.4,
+    fontSize: 24,
+    fontFamily: "OpenSans_700Bold",
+    textAlign: "left",
+    marginEnd: SCREEN_WIDTH * 0.05,
   },
 });
 

@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: "OpenSans_700Bold",
     textAlign: "center",
+    marginBottom: SCREEN_WIDTH * 0.07,
   },
   inputText: {
     fontFamily: "OpenSans_600SemiBold",

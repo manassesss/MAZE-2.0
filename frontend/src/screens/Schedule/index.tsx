@@ -57,7 +57,7 @@ export default function Schedule() {
     nav.navigate("ScheduleForm");
   };
 
-  function obterDia(dia: string, abreviado?: boolean) {
+  function obterDia(dia: string, date: Date, abreviado?: boolean) {
     const days = [
       "Domingo",
       "Segunda",
@@ -92,7 +92,7 @@ export default function Schedule() {
       const das = data.toDate();
       //return dayName + ', ' + dia.split('/')[1] + ' de ' + meses[d.getMonth()];
       return (
-        days[das.getDay()] +
+        days[date.getDay()] +
         ", " +
         (parseInt(dia.split("/")[0]) + 1) +
         " de " +
@@ -101,7 +101,7 @@ export default function Schedule() {
       //return moment(dia).format('DD/MMM/YYYY');
     } else {
       const d = new Date(dia);
-      const dayName = days_abreviado[d.getDay()];
+      const dayName = days_abreviado[date.getDay()];
       return dayName;
     }
   }
@@ -162,7 +162,9 @@ export default function Schedule() {
                   { transform: [{ scale: scale }], opacity: opacity },
                 ]}
               >
-                <Text style={styles.itemText}>{obterDia(item)}</Text>
+                <Text style={styles.itemText}>
+                  {obterDia(item, scheduleDict[item][0].date)}
+                </Text>
                 <ScheduleItem
                   onPress={() => handleModalVisible(item)}
                   item={scheduleDict[item]}
