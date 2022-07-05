@@ -33,6 +33,13 @@ const ScheduleItem: React.FC<Props> = ({ onPress, item }) => {
       return (
         <View>
           <View style={[styles.itemContainer]}>
+            <View
+              style={[
+                styles.tagContainer,
+                { backgroundColor: element.eventType?.color },
+              ]}
+            >
+            </View>
             <Text style={styles.titleText}>{element.clientName}</Text>
             <View
               style={{
@@ -41,19 +48,9 @@ const ScheduleItem: React.FC<Props> = ({ onPress, item }) => {
                 justifyContent: "space-between",
               }}
             >
-              <View
-                style={[
-                  styles.tagContainer,
-                  { backgroundColor: element.eventType?.color },
-                ]}
-              >
-                <Text style={[styles.titleText, { color: "#FFFFFF" }]}>
-                  {element.eventType?.name}
-                </Text>
-              </View>
               <Ionicons
                 name="trash"
-                size={24}
+                size={20}
                 color="#F07B77"
                 onPress={onPress}
               />
@@ -87,6 +84,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: "#525257",
     fontSize: 16,
+    textAlign: "left",
     fontWeight: "bold",
     fontFamily: "OpenSans_700Bold",
   },
@@ -94,7 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    width: width * 0.3,
+    width: 20,
+    height: 20,
   },
   shadowProp: {
     shadowColor: "#171717",

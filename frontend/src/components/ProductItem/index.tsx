@@ -41,7 +41,7 @@ const ProductItem: React.FC<Props> = ({ onPress, item, scale, opacity }) => (
         type="edit"
         icon="create-outline"
       />
-      <ButtonIcon onPress={onPress} type="delete" icon="trash-outline" />
+      <ButtonIcon onPress={onPress} type="delete" icon="trash" />
     </View>
   </Animated.View>
 );

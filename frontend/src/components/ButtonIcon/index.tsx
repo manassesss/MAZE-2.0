@@ -10,7 +10,7 @@ type Props = {
 const ButtonIcon = ({ onPress, type, icon }: Props) => (
   <TouchableHighlight
     onPress={onPress}
-    underlayColor={type === "delete" ? "#171717" : "#F07B77"}
+    underlayColor={"#F07B77"}
     style={[
       type === "edit"
         ? styles.appButtonContainerEdit
@@ -26,7 +26,7 @@ const ButtonIcon = ({ onPress, type, icon }: Props) => (
     <Ionicons
       name={icon}
       size={20}
-      color={type === "delete" ? "white" : "black"}
+      color={type === "delete" ? "#F07B77" : "black"}
     />
   </TouchableHighlight>
 );
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   appappButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: 2
   },
   circleButton: {
     height: 50,
@@ -48,13 +49,13 @@ const styles = StyleSheet.create({
     width: 50,
     elevation: 8,
     borderRadius: 10,
+    backgroundColor: "#F5F5F5"
   },
   appButtonContainerEdit: {
-    borderWidth: 1,
     backgroundColor: "#FFFFFF",
   },
   appButtonContainerDelete: {
-    backgroundColor: "#F07B77",
+    backgroundColor: "#FFFFFF",
   },
   appButtonContainerGhost: {
     backgroundColor: "#FFFFFF",

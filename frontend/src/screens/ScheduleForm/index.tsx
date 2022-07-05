@@ -12,9 +12,11 @@ import {
   TextInput,
   View,
   Image,
+  Touchable,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import DatePicker from 'react-native-date-picker'
 import { MaskedTextInput } from "react-native-mask-text";
 import { Dimensions } from "react-native";
 import { CompositeNavigationProp } from "@react-navigation/native";
@@ -22,6 +24,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { productsList } from "../../services/products";
 import CalendarPicker from "../../components/CalendarPicker";
+import { TouchableHighlight } from "react-native-gesture-handler";
 type RoutesList = {
   StockForm: undefined;
   Menu: undefined;
@@ -57,6 +60,8 @@ const ScheduleForm = () => {
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false);
   const nav = useNavigation<MenuScreenProp>();
   const currentDate = new Date();
   const onFinish = () => {
@@ -141,9 +146,6 @@ const ScheduleForm = () => {
       <ScrollView style={styles.containerContainer}>
         <Text style={styles.titleText}>Agendamento</Text>
         <View>
-          <CalendarPicker item={currentDate} />
-        </View>
-        <View>
           <Text style={styles.inputText}>Nome do produto</Text>
           <TextInput
             onChangeText={(e) => setName(e)}
@@ -151,6 +153,13 @@ const ScheduleForm = () => {
             style={styles.input}
             placeholder="Nome do Cliente"
           />
+          <Text style={styles.inputText}>Data do Evento</Text>
+            <View style={styles.picker}>
+            <RNPickerSelect
+                onValueChange={(value) => setSelected(value)}
+                items={eventType}
+              />
+            </View>
           <View>
             <Text style={styles.inputText}>Tipo de Evento</Text>
             <View style={styles.picker}>

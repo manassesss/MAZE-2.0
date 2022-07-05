@@ -12,6 +12,7 @@ import {
   TextInput,
   View,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { MaskedTextInput } from "react-native-mask-text";
@@ -81,6 +82,7 @@ const StockForm = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView behavior={"position"}>
       <Header>Voltar</Header>
       <ScrollView style={styles.containerContainer}>
         <Text style={styles.titleText}>Estocagem</Text>
@@ -119,13 +121,21 @@ const StockForm = () => {
           <View style={[styles.twoInputsContainer]}>
             <View style={styles.picker}>
               <RNPickerSelect
+                style={{
+                  inputIOSContainer: {
+                    padding: 20
+                  }
+                }}
                 onValueChange={(value) => setSelected(value)}
                 items={measurementType}
               />
             </View>
             <TextInput
               keyboardType="numeric"
-              onChangeText={(e) => setAmount(parseInt(e))}
+              onChangeText={(e) => {
+                if(isNaN(parseInt(e))) setAmount(0)
+                else setAmount(parseInt(e))
+              }}
               value={amount.toString()}
               style={[
                 styles.input,
@@ -143,6 +153,7 @@ const StockForm = () => {
           <ButtonAdd onPress={onFinish} title={"Salvar"} color="#F07B77" />
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
