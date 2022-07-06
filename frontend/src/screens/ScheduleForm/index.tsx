@@ -4,6 +4,7 @@ import { useState } from "react";
 import ButtonAdd from "../../components/ButtonAdd";
 import ButtonIcon from "../../components/ButtonIcon";
 import Header from "../../components/Header";
+import DatePicker from "react-native-datepicker";
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,19 +13,19 @@ import {
   TextInput,
   View,
   Image,
-  Touchable,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import DatePicker from 'react-native-date-picker'
 import { MaskedTextInput } from "react-native-mask-text";
 import { Dimensions } from "react-native";
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { productsList } from "../../services/products";
-import CalendarPicker from "../../components/CalendarPicker";
-import { TouchableHighlight } from "react-native-gesture-handler";
+import moment from "moment";
 type RoutesList = {
   StockForm: undefined;
   Menu: undefined;
@@ -60,21 +61,22 @@ const ScheduleForm = () => {
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
-  const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState(new Date(1598051730000));
+
+  const [dateText, setDateText] = useState<string>(
+    moment(new Date()).format("DD/MM/YYYY")
+  );
   const nav = useNavigation<MenuScreenProp>();
-  const currentDate = new Date();
   const onFinish = () => {
     nav.navigate("Menu");
   };
-
   const addAmount = (type: number) => {
     if (type === 1) setAmount(amount + 25);
     else setAmount(amount + 1);
   };
   const reduceAmount = (type: number) => {
-    if (amount === 0 || amount - 1 < 0 || (type === 1 && amount - 25 < 0))
-      return;
+    if (amount === 0 || amount - 1 < 0) return;
+    else if (type === 1 && amount - 25 < 0) setAmount(amount - 1);
     else if (type === 1) setAmount(amount - 25);
     else setAmount(amount - 1);
   };
@@ -83,7 +85,7 @@ const ScheduleForm = () => {
       .filter((i) => i.type === type)
       .map((item) => {
         return (
-          <View style={[styles.twoInputsContainer]}>
+          <View key={item.id} style={[styles.twoInputsContainer]}>
             <BouncyCheckbox
               style={{ marginLeft: 10 }}
               size={25}
@@ -143,93 +145,131 @@ const ScheduleForm = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header>Voltar</Header>
-      <ScrollView style={styles.containerContainer}>
-        <Text style={styles.titleText}>Agendamento</Text>
-        <View>
-          <Text style={styles.inputText}>Nome do produto</Text>
-          <TextInput
-            onChangeText={(e) => setName(e)}
-            value={name}
-            style={styles.input}
-            placeholder="Nome do Cliente"
-          />
-          <Text style={styles.inputText}>Data do Evento</Text>
-            <View style={styles.picker}>
-            <RNPickerSelect
-                onValueChange={(value) => setSelected(value)}
-                items={eventType}
-              />
-            </View>
+      <KeyboardAvoidingView behavior={"position"}>
+        <ScrollView style={styles.containerContainer}>
+          <Text style={styles.titleText}>Agendamento</Text>
           <View>
-            <Text style={styles.inputText}>Tipo de Evento</Text>
-            <View style={styles.picker}>
-              <RNPickerSelect
-                onValueChange={(value) => setSelected(value)}
-                items={eventType}
-              />
-            </View>
-            <View>
-              <Text style={styles.inputText}>Tortas & Bolos</Text>
-              {checkItem(0)}
-            </View>
-            <View>
-              <Text style={styles.inputText}>Salgados</Text>
-              {checkItem(1)}
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
+            <Text style={styles.inputText}>Nome do produto</Text>
+            <TextInput
+              onChangeText={(e) => setName(e)}
+              value={name}
+              style={styles.input}
+              placeholder="Nome do Cliente"
+            />
+            <Text style={styles.inputText}>Data do Evento</Text>
+            <DatePicker
+              style={[styles.picker, { width: "100%" }]}
+              date={date}
+              mode="date"
+              placeholder="select date"
+              format="DD-MM-YYYY"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateIcon: {
+                  display: "none",
+                },
+                dateInput: {
+                  borderWidth: 0,
+                },
               }}
-            >
-              <View>
-                <Text style={styles.inputText}>Valor recebido</Text>
-                <MaskedTextInput
-                  type="currency"
-                  options={{
-                    prefix: "R$",
-                    decimalSeparator: ".",
-                    groupSeparator: ",",
-                    precision: 2,
-                  }}
-                  keyboardType="numeric"
-                  onChangeText={(text, rawText) =>
-                    setPrice(parseFloat(rawText) / 100)
-                  }
-                  value={price.toString()}
-                  style={[styles.input, { width: width * 0.4 }]}
-                  placeholder="Valor recebido"
+              onDateChange={(date: Date) => {
+                setDate(date);
+              }}
+            />
+            {/* <MaskedTextInput
+              mask="99/99/9999"
+              onChangeText={(text, rawText) => setDateText(text)}
+              keyboardType="numeric"
+              value={dateText}
+              style={[styles.input, { width: "80%" }]}
+              placeholder="Data do evento"
+            /> */}
+
+            {/* <ButtonIcon
+              onPress={showDatepicker}
+              type="calendar"
+              icon="calendar"
+            /> */}
+            <View>
+              <Text style={styles.inputText}>Tipo de Evento</Text>
+              <View style={styles.picker}>
+                <RNPickerSelect
+                  onValueChange={(value) => setSelected(value)}
+                  items={eventType}
                 />
               </View>
               <View>
-                <Text style={styles.inputText}>Valor acertado</Text>
-                <MaskedTextInput
-                  type="currency"
-                  options={{
-                    prefix: "R$",
-                    decimalSeparator: ".",
-                    groupSeparator: ",",
-                    precision: 2,
-                  }}
-                  keyboardType="numeric"
-                  onChangeText={(text, rawText) =>
-                    setPrice(parseFloat(rawText) / 100)
-                  }
-                  value={price.toString()}
-                  style={[styles.input, { width: width * 0.4 }]}
-                  placeholder="Valor acertado"
-                />
+                <Text style={styles.inputText}>Tortas & Bolos</Text>
+                {checkItem(0)}
+              </View>
+              <View>
+                <Text style={styles.inputText}>Salgados</Text>
+                {checkItem(1)}
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                  <Text style={styles.inputText}>Valor recebido</Text>
+                  <MaskedTextInput
+                    type="currency"
+                    options={{
+                      prefix: "R$",
+                      decimalSeparator: ".",
+                      groupSeparator: ",",
+                      precision: 2,
+                    }}
+                    keyboardType="numeric"
+                    onChangeText={(text, rawText) =>
+                      setPrice(parseFloat(rawText) / 100)
+                    }
+                    value={price.toString()}
+                    style={[styles.input, { width: width * 0.4 }]}
+                    placeholder="Valor recebido"
+                  />
+                </View>
+                <View>
+                  <Text style={styles.inputText}>Valor acertado</Text>
+                  <MaskedTextInput
+                    type="currency"
+                    options={{
+                      prefix: "R$",
+                      decimalSeparator: ".",
+                      groupSeparator: ",",
+                      precision: 2,
+                    }}
+                    keyboardType="numeric"
+                    onChangeText={(text, rawText) =>
+                      setPrice(parseFloat(rawText) / 100)
+                    }
+                    value={price.toString()}
+                    style={[styles.input, { width: width * 0.4 }]}
+                    placeholder="Valor acertado"
+                  />
+                </View>
               </View>
             </View>
+            <Text style={styles.inputText}>Anotações</Text>
+            <TextInput
+              onChangeText={(e) => setName(e)}
+              value={name}
+              multiline
+              style={[styles.input, { height: 100 }]}
+              placeholder="Anotações"
+            />
+            <ButtonAdd
+              onPress={() => onFinish()}
+              title={"Salvar"}
+              color="#F07B77"
+            />
           </View>
-          <ButtonAdd
-            onPress={() => onFinish()}
-            title={"Salvar"}
-            color="#F07B77"
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

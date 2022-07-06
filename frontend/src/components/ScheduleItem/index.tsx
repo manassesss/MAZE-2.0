@@ -31,15 +31,14 @@ const ScheduleItem: React.FC<Props> = ({ onPress, item }) => {
   const info = () => {
     return item.map((element: Item) => {
       return (
-        <View>
+        <View key={element.id}>
           <View style={[styles.itemContainer]}>
             <View
               style={[
                 styles.tagContainer,
                 { backgroundColor: element.eventType?.color },
               ]}
-            >
-            </View>
+            ></View>
             <Text style={styles.titleText}>{element.clientName}</Text>
             <View
               style={{

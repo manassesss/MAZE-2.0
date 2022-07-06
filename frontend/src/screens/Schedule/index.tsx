@@ -130,6 +130,7 @@ export default function Schedule() {
           style={styles.flatlistContainer}
           showsVerticalScrollIndicator={false}
           data={Object.keys(scheduleDict)}
+          keyExtractor={(index) => index}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
@@ -157,6 +158,7 @@ export default function Schedule() {
             });
             return (
               <Animated.View
+                key={index}
                 style={[
                   styles.itemContainer,
                   { transform: [{ scale: scale }], opacity: opacity },

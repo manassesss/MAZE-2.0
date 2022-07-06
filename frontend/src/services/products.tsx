@@ -25,17 +25,17 @@ export const productsList = [
     type: 1,
   },
   {
-    id: 5,
+    id: 6,
     name: "Empada",
     type: 1,
   },
   {
-    id: 5,
+    id: 7,
     name: "Torta de Frango",
     type: 1,
   },
   {
-    id: 5,
+    id: 8,
     name: "Pastel",
     type: 1,
   },
