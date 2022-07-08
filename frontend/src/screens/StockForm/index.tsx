@@ -12,6 +12,7 @@ import {
   TextInput,
   View,
   Image,
+  KeyboardAvoidingView,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { MaskedTextInput } from "react-native-mask-text";
@@ -81,68 +82,82 @@ const StockForm = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header>Voltar</Header>
-      <ScrollView style={styles.containerContainer}>
-        <Text style={styles.titleText}>Estocagem</Text>
-        <View style={styles.imageContainer}>
-          <Image
-            source={require("../../../assets/Grocer2.png")}
-            style={{ width: SCREEN_WIDTH * 0.6, height: SCREEN_WIDTH * 0.6 }}
-          />
-        </View>
-        <View>
-          <Text style={styles.inputText}>Nome do produto</Text>
-          <TextInput
-            onChangeText={(e) => setName(e)}
-            value={name}
-            style={styles.input}
-            placeholder="Nome do produto"
-          />
-          <Text style={styles.inputText}>Valor unitário</Text>
-          <MaskedTextInput
-            type="currency"
-            options={{
-              prefix: "R$",
-              decimalSeparator: ".",
-              groupSeparator: ",",
-              precision: 2,
-            }}
-            keyboardType="numeric"
-            onChangeText={(text, rawText) =>
-              setPrice(parseFloat(rawText) / 100)
-            }
-            value={price.toString()}
-            style={styles.input}
-            placeholder="Valor unitário"
-          />
-          <Text style={styles.inputText}>Quantidade</Text>
-          <View style={[styles.twoInputsContainer]}>
-            <View style={styles.picker}>
-              <RNPickerSelect
-                onValueChange={(value) => setSelected(value)}
-                items={measurementType}
-              />
-            </View>
-            <TextInput
-              keyboardType="numeric"
-              onChangeText={(e) => setAmount(parseInt(e))}
-              value={amount.toString()}
-              style={[
-                styles.input,
-                {
-                  width: width * 0.15,
-                },
-              ]}
-              placeholder="Quantidade"
+      <KeyboardAvoidingView behavior={"position"}>
+        <Header>Voltar</Header>
+        <ScrollView style={styles.containerContainer}>
+          <Text style={styles.titleText}>Estocagem</Text>
+          <View style={styles.imageContainer}>
+            <Image
+              source={require("../../../assets/Grocer2.png")}
+              style={{ width: SCREEN_WIDTH * 0.6, height: SCREEN_WIDTH * 0.6 }}
             />
-            <View style={[styles.twoInputsContainer]}>
-              <ButtonIcon onPress={reduceAmount} type="remove" icon="remove" />
-              <ButtonIcon onPress={addAmount} type="add" icon="add" />
-            </View>
           </View>
-          <ButtonAdd onPress={onFinish} title={"Salvar"} color="#F07B77" />
-        </View>
-      </ScrollView>
+          <View>
+            <Text style={styles.inputText}>Nome do produto</Text>
+            <TextInput
+              onChangeText={(e) => setName(e)}
+              value={name}
+              style={styles.input}
+              placeholder="Nome do produto"
+            />
+            <Text style={styles.inputText}>Valor unitário</Text>
+            <MaskedTextInput
+              type="currency"
+              options={{
+                prefix: "R$",
+                decimalSeparator: ".",
+                groupSeparator: ",",
+                precision: 2,
+              }}
+              keyboardType="numeric"
+              onChangeText={(text, rawText) =>
+                setPrice(parseFloat(rawText) / 100)
+              }
+              value={price.toString()}
+              style={styles.input}
+              placeholder="Valor unitário"
+            />
+            <Text style={styles.inputText}>Quantidade</Text>
+            <View style={[styles.twoInputsContainer]}>
+              <View style={styles.picker}>
+                <RNPickerSelect
+                  style={{
+                    inputIOSContainer: {
+                      padding: 20,
+                    },
+                  }}
+                  onValueChange={(value) => setSelected(value)}
+                  items={measurementType}
+                />
+              </View>
+              <TextInput
+                keyboardType="numeric"
+                onChangeText={(e) => {
+                  if (isNaN(parseInt(e))) setAmount(0);
+                  else setAmount(parseInt(e));
+                }}
+                value={amount.toString()}
+                style={[
+                  styles.input,
+                  {
+                    width: width * 0.15,
+                  },
+                ]}
+                placeholder="Quantidade"
+              />
+              <View style={[styles.twoInputsContainer]}>
+                <ButtonIcon
+                  onPress={reduceAmount}
+                  type="remove"
+                  icon="remove"
+                />
+                <ButtonIcon onPress={addAmount} type="add" icon="add" />
+              </View>
+            </View>
+            <ButtonAdd onPress={onFinish} title={"Salvar"} color="#F07B77" />
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

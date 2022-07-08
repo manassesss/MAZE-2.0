@@ -23,13 +23,13 @@ const { height } = Dimensions.get("screen");
 const SIZE_ITEM = 70 + 20 * 2;
 
 type RoutesList = {
-  StockForm: undefined;
+  ScheduleForm: undefined;
   Menu: undefined;
 };
 
 type StockScreenProp = CompositeNavigationProp<
   StackNavigationProp<RoutesList, "Menu">,
-  BottomTabNavigationProp<RoutesList, "StockForm">
+  BottomTabNavigationProp<RoutesList, "ScheduleForm">
 >;
 
 export default function Schedule() {
@@ -54,10 +54,10 @@ export default function Schedule() {
     console.log(Object.keys(scheduleDict).length);
   };
   const navToAdd = () => {
-    nav.navigate("StockForm");
+    nav.navigate("ScheduleForm");
   };
 
-  function obterDia(dia: string, abreviado?: boolean) {
+  function obterDia(dia: string, date: Date, abreviado?: boolean) {
     const days = [
       "Domingo",
       "Segunda",
@@ -92,7 +92,7 @@ export default function Schedule() {
       const das = data.toDate();
       //return dayName + ', ' + dia.split('/')[1] + ' de ' + meses[d.getMonth()];
       return (
-        days[das.getDay()] +
+        days[date.getDay()] +
         ", " +
         (parseInt(dia.split("/")[0]) + 1) +
         " de " +
@@ -101,7 +101,7 @@ export default function Schedule() {
       //return moment(dia).format('DD/MMM/YYYY');
     } else {
       const d = new Date(dia);
-      const dayName = days_abreviado[d.getDay()];
+      const dayName = days_abreviado[date.getDay()];
       return dayName;
     }
   }
@@ -130,6 +130,7 @@ export default function Schedule() {
           style={styles.flatlistContainer}
           showsVerticalScrollIndicator={false}
           data={Object.keys(scheduleDict)}
+          keyExtractor={(index) => index}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: scrollY } } }],
             { useNativeDriver: true }
@@ -157,12 +158,15 @@ export default function Schedule() {
             });
             return (
               <Animated.View
+                key={index}
                 style={[
                   styles.itemContainer,
                   { transform: [{ scale: scale }], opacity: opacity },
                 ]}
               >
-                <Text style={styles.itemText}>{obterDia(item)}</Text>
+                <Text style={styles.itemText}>
+                  {obterDia(item, scheduleDict[item][0].date)}
+                </Text>
                 <ScheduleItem
                   onPress={() => handleModalVisible(item)}
                   item={scheduleDict[item]}
