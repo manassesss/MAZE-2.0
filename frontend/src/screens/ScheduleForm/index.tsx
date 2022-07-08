@@ -3,19 +3,15 @@ import React from "react";
 import { useState } from "react";
 import ButtonAdd from "../../components/ButtonAdd";
 import ButtonIcon from "../../components/ButtonIcon";
-import Header from "../../components/Header";
 import DatePicker from "react-native-datepicker";
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   ScrollView,
   TextInput,
   View,
   Image,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  Alert,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -38,36 +34,53 @@ type MenuScreenProp = CompositeNavigationProp<
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const { width } = Dimensions.get("screen");
-const eventType = [
+const eventTypes = [
   {
     label: "Aniversário",
+    color: "#E6EA2D",
     value: "0",
   },
   {
     label: "Casamento",
+    color: "#EE9999",
     value: "1",
   },
   {
     label: "Festa",
+    color: "#533DEB",
     value: "2",
   },
   {
     label: "Outros",
+    color: "#6ABD4B",
     value: "3",
   },
 ];
 const ScheduleForm = () => {
-  const [selected, setSelected] = useState();
+  const [eventType, setEventType] = useState<string>();
   const [name, setName] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
-  const [price, setPrice] = useState<number>(0);
+  const [agreedPrice, setAgreedPrice] = useState<number>(0);
+  const [receivedPrice, setReceivedPrice] = useState<number>(0);
   const [date, setDate] = useState(new Date(1598051730000));
+  const [note, setNote] = useState<string>("");
 
   const [dateText, setDateText] = useState<string>(
     moment(new Date()).format("DD/MM/YYYY")
   );
   const nav = useNavigation<MenuScreenProp>();
   const onFinish = () => {
+    const data = {
+      clientName: name,
+      date: date,
+      eventType: {
+        id: eventType,
+        name: eventTypes.find((item) => item.value === eventType)?.label,
+        color: eventTypes.find((item) => item.value === eventType)?.color,
+      },
+      agreedPrice: agreedPrice,
+      receivedPrice: receivedPrice,
+    };
     nav.navigate("Menu");
   };
   const addAmount = (type: number) => {
@@ -85,7 +98,10 @@ const ScheduleForm = () => {
       .filter((i) => i.type === type)
       .map((item) => {
         return (
-          <View key={item.id} style={[styles.twoInputsContainer]}>
+          <View
+            key={item.id}
+            style={[{ justifyContent: "space-between", flexDirection: "row" }]}
+          >
             <BouncyCheckbox
               style={{ marginLeft: 10 }}
               size={25}
@@ -93,6 +109,7 @@ const ScheduleForm = () => {
               unfillColor="#FFFFFF"
               iconStyle={{ borderColor: "#F07B77" }}
               textStyle={{
+                fontSize: 14,
                 fontFamily: "OpenSans_400Regular",
                 textDecorationLine: "none",
               }}
@@ -108,13 +125,14 @@ const ScheduleForm = () => {
                 value={amount.toString()}
                 style={[
                   {
-                    height: 40,
+                    height: 45,
                     justifyContent: "center",
                     alignItems: "center",
                     borderWidth: 1,
                     borderRadius: 8,
+                    marginRight: 2,
                     padding: 10,
-                    width: width * 0.15,
+                    width: width * 0.14,
                   },
                 ]}
                 placeholder="Quantidade"
@@ -136,20 +154,22 @@ const ScheduleForm = () => {
         );
       });
   };
-  // const handleAmount = (value) => {
-  //   // eslint-disable-next-line use-isnan
-  //   if (value === NaN) setAmount(0);
-  //   setAmount(parseInt(value));
-  // };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header>Voltar</Header>
-      <KeyboardAvoidingView behavior={"position"}>
-        <ScrollView style={styles.containerContainer}>
-          <Text style={styles.titleText}>Agendamento</Text>
+    <View style={styles.container}>
+      <KeyboardAvoidingView behavior={"padding"}>
+        <ScrollView style={[]}>
           <View>
-            <Text style={styles.inputText}>Nome do produto</Text>
+            <View style={styles.imageContainer}>
+              <Image
+                source={require("../../../assets/Calendar2.png")}
+                style={{
+                  width: SCREEN_WIDTH * 0.6,
+                  height: SCREEN_WIDTH * 0.6,
+                }}
+              />
+            </View>
+            <Text style={styles.inputText}>Nome do Cliente</Text>
             <TextInput
               onChangeText={(e) => setName(e)}
               value={name}
@@ -165,6 +185,9 @@ const ScheduleForm = () => {
               format="DD-MM-YYYY"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
+              onDateChange={(dateString: string, date: Date) => {
+                setDate(date);
+              }}
               customStyles={{
                 dateIcon: {
                   display: "none",
@@ -172,9 +195,6 @@ const ScheduleForm = () => {
                 dateInput: {
                   borderWidth: 0,
                 },
-              }}
-              onDateChange={(date: Date) => {
-                setDate(date);
               }}
             />
             {/* <MaskedTextInput
@@ -195,8 +215,13 @@ const ScheduleForm = () => {
               <Text style={styles.inputText}>Tipo de Evento</Text>
               <View style={styles.picker}>
                 <RNPickerSelect
-                  onValueChange={(value) => setSelected(value)}
-                  items={eventType}
+                  style={{
+                    inputIOSContainer: {
+                      padding: 20,
+                    },
+                  }}
+                  onValueChange={(value) => setEventType(value)}
+                  items={eventTypes}
                 />
               </View>
               <View>
@@ -204,73 +229,121 @@ const ScheduleForm = () => {
                 {checkItem(0)}
               </View>
               <View>
-                <Text style={styles.inputText}>Salgados</Text>
-                {checkItem(1)}
+                <Text style={styles.inputText}>Vai ter salgado?</Text>
+                <View
+                  style={[
+                    { justifyContent: "space-between", flexDirection: "row" },
+                  ]}
+                >
+                  <BouncyCheckbox
+                    style={{ marginLeft: 10 }}
+                    size={25}
+                    fillColor="#F07B77"
+                    unfillColor="#FFFFFF"
+                    iconStyle={{ borderColor: "#F07B77" }}
+                    textStyle={{
+                      fontSize: 14,
+                      fontFamily: "OpenSans_400Regular",
+                      textDecorationLine: "none",
+                    }}
+                    text={"Vaaaai"}
+                    onPress={(isChecked: boolean) => {
+                      console.log("oi");
+                    }}
+                  />
+                  <View style={[styles.twoInputsContainer]}>
+                    <TextInput
+                      keyboardType="numeric"
+                      onChangeText={(e) => setAmount(parseInt(e))}
+                      value={amount.toString()}
+                      style={[
+                        {
+                          height: 45,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderWidth: 1,
+                          borderRadius: 8,
+                          marginRight: 2,
+                          padding: 10,
+                          width: width * 0.14,
+                        },
+                      ]}
+                      placeholder="Quantidade"
+                    />
+                    <View style={[styles.twoInputsContainer]}>
+                      <ButtonIcon
+                        onPress={() => reduceAmount(1)}
+                        type="remove"
+                        icon="remove"
+                      />
+                      <ButtonIcon
+                        onPress={() => addAmount(1)}
+                        type="add"
+                        icon="add"
+                      />
+                    </View>
+                  </View>
+                </View>
               </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View>
-                  <Text style={styles.inputText}>Valor recebido</Text>
-                  <MaskedTextInput
-                    type="currency"
-                    options={{
-                      prefix: "R$",
-                      decimalSeparator: ".",
-                      groupSeparator: ",",
-                      precision: 2,
-                    }}
-                    keyboardType="numeric"
-                    onChangeText={(text, rawText) =>
-                      setPrice(parseFloat(rawText) / 100)
-                    }
-                    value={price.toString()}
-                    style={[styles.input, { width: width * 0.4 }]}
-                    placeholder="Valor recebido"
-                  />
-                </View>
-                <View>
-                  <Text style={styles.inputText}>Valor acertado</Text>
-                  <MaskedTextInput
-                    type="currency"
-                    options={{
-                      prefix: "R$",
-                      decimalSeparator: ".",
-                      groupSeparator: ",",
-                      precision: 2,
-                    }}
-                    keyboardType="numeric"
-                    onChangeText={(text, rawText) =>
-                      setPrice(parseFloat(rawText) / 100)
-                    }
-                    value={price.toString()}
-                    style={[styles.input, { width: width * 0.4 }]}
-                    placeholder="Valor acertado"
-                  />
-                </View>
+
+              <View>
+                <Text style={styles.inputText}>Valor recebido</Text>
+                <MaskedTextInput
+                  type="currency"
+                  options={{
+                    prefix: "R$",
+                    decimalSeparator: ".",
+                    groupSeparator: ",",
+                    precision: 2,
+                  }}
+                  keyboardType="numeric"
+                  onChangeText={(text, rawText) =>
+                    setReceivedPrice(parseFloat(rawText) / 100)
+                  }
+                  value={receivedPrice.toString()}
+                  style={[styles.input]}
+                  placeholder="Valor recebido"
+                />
+              </View>
+              <View>
+                <Text style={styles.inputText}>Valor acertado</Text>
+                <MaskedTextInput
+                  type="currency"
+                  options={{
+                    prefix: "R$",
+                    decimalSeparator: ".",
+                    groupSeparator: ",",
+                    precision: 2,
+                  }}
+                  keyboardType="numeric"
+                  onChangeText={(text, rawText) =>
+                    setAgreedPrice(parseFloat(rawText) / 100)
+                  }
+                  value={agreedPrice.toString()}
+                  style={[styles.input]}
+                  placeholder="Valor acertado"
+                />
               </View>
             </View>
             <Text style={styles.inputText}>Anotações</Text>
             <TextInput
               onChangeText={(e) => setName(e)}
               value={name}
-              multiline
-              style={[styles.input, { height: 100 }]}
+              multiline={true}
+              style={[styles.input]}
               placeholder="Anotações"
             />
-            <ButtonAdd
-              onPress={() => onFinish()}
-              title={"Salvar"}
-              color="#F07B77"
-            />
+            <View style={{ marginBottom: SCREEN_WIDTH * 0.05 }}>
+              <ButtonAdd
+                onPress={() => onFinish()}
+                title={"Salvar"}
+                color="#F07B77"
+              />
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -278,6 +351,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+    paddingHorizontal: SCREEN_WIDTH * 0.05,
   },
   containerContainer: {
     marginHorizontal: SCREEN_WIDTH * 0.05,

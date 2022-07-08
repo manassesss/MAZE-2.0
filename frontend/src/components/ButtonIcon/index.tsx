@@ -36,20 +36,19 @@ const styles = StyleSheet.create({
   appappButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 2
+    marginHorizontal: 2,
   },
   circleButton: {
     height: 50,
     width: 50,
-    elevation: 8,
     borderRadius: 25,
   },
   normalButton: {
     height: 50,
     width: 50,
-    elevation: 8,
+
     borderRadius: 10,
-    backgroundColor: "#F5F5F5"
+    backgroundColor: "#F5F5F5",
   },
   appButtonContainerEdit: {
     backgroundColor: "#FFFFFF",

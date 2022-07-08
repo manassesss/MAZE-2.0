@@ -83,9 +83,7 @@ const StockForm = () => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView behavior={"position"}>
-        <Header>Voltar</Header>
         <ScrollView style={styles.containerContainer}>
-          <Text style={styles.titleText}>Estocagem</Text>
           <View style={styles.imageContainer}>
             <Image
               source={require("../../../assets/Grocer2.png")}

@@ -68,8 +68,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     marginTop: SCREEN_WIDTH * 0.01,
     paddingVertical: SCREEN_WIDTH * 0.02,
-    paddingHorizontal: SCREEN_WIDTH * 0.02,
-    elevation: 8,
   },
   itemContainer: {
     flexDirection: "row",
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: "#171717",
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 1,
   },

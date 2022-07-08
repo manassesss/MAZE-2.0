@@ -20,7 +20,7 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const { height } = Dimensions.get("screen");
-const SIZE_ITEM = 70 + 20 * 2;
+const SIZE_ITEM = 70 + 30 * 2;
 type RoutesList = {
   StockForm: undefined;
   Menu: undefined;

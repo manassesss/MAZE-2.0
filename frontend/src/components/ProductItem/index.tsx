@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   // ...
   appButtonContainer: {
     flexDirection: "row",
-    elevation: 8,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
     marginTop: SCREEN_WIDTH * 0.03,
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: "#171717",
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.05,
     shadowRadius: 1,
   },

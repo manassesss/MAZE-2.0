@@ -26,7 +26,7 @@ export default function App() {
   } else {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar style="auto" />
+        <StatusBar animated={true} />
         <Routes />
       </View>
     );

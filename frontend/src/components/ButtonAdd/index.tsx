@@ -33,7 +33,6 @@ const ButtonAdd: React.FC<Props> = ({ onPress, title, color }) => (
 const styles = StyleSheet.create({
   // ...
   appButtonContainer: {
-    elevation: 8,
     borderRadius: 10,
     paddingVertical: SCREEN_WIDTH * 0.05,
     paddingHorizontal: SCREEN_WIDTH * 0.02,

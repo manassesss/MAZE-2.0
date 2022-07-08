@@ -200,7 +200,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
   },
   flatlistContainer: {
-    marginHorizontal: SCREEN_WIDTH * 0.05,
+    marginTop: SCREEN_WIDTH * 0.03,
+    marginHorizontal: SCREEN_WIDTH * 0.04,
   },
   headContainer: {
     marginTop: SCREEN_WIDTH * 0.05,

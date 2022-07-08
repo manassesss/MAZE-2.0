@@ -20,16 +20,40 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Menu" component={Menu} />
-        <Stack.Screen name="Stock" component={Stock} />
-        <Stack.Screen name="StockForm" component={StockForm} />
-        <Stack.Screen name="Schedule" component={Schedule} />
-        <Stack.Screen name="ScheduleForm" component={ScheduleForm} />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Menu"
+          options={{ headerShown: false }}
+          component={Menu}
+        />
+        <Stack.Screen
+          name="Stock"
+          options={{ headerShown: false }}
+          component={Stock}
+        />
+        <Stack.Screen
+          name="StockForm"
+          options={{
+            headerTitle: "Estocagem",
+            headerBackTitleVisible: false,
+            headerTintColor: "#000",
+          }}
+          component={StockForm}
+        />
+        <Stack.Screen
+          name="Schedule"
+          options={{ headerShown: false }}
+          component={Schedule}
+        />
+        <Stack.Screen
+          name="ScheduleForm"
+          options={{
+            headerTitle: "Agendamento",
+            headerBackTitleVisible: false,
+            headerTintColor: "#000",
+          }}
+          component={ScheduleForm}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

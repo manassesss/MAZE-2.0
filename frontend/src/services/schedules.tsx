@@ -9,7 +9,8 @@ export const scheduleList = [
       color: "#EE9999",
     },
     receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -44,7 +45,8 @@ export const scheduleList = [
       color: "#533DEB",
     },
     receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -78,8 +80,8 @@ export const scheduleList = [
       name: "Aniversário",
       color: "#E6EA2D",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -114,7 +116,8 @@ export const scheduleList = [
       color: "#533DEB",
     },
     receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -146,10 +149,11 @@ export const scheduleList = [
     eventType: {
       id: "1",
       name: "Outros",
-      color: "#D9D0DE",
+      color: "#6ABD4B",
     },
     receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -183,8 +187,8 @@ export const scheduleList = [
       name: "Anivervário",
       color: "#E6EA2D",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -218,8 +222,8 @@ export const scheduleList = [
       name: "Casamento",
       color: "#EE9999",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -253,8 +257,8 @@ export const scheduleList = [
       name: "Festa",
       color: "#533DEB",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -288,8 +292,8 @@ export const scheduleList = [
       name: "Aniversário",
       color: "#E6EA2D",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -323,8 +327,8 @@ export const scheduleList = [
       name: "Festa",
       color: "#533DEB",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -356,10 +360,10 @@ export const scheduleList = [
     eventType: {
       id: "1",
       name: "Outros",
-      color: "#D9D0DE",
+      color: "#6ABD4B",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -391,10 +395,10 @@ export const scheduleList = [
     eventType: {
       id: "1",
       name: "Outros",
-      color: "#D9D0DE",
+      color: "#6ABD4B",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
@@ -428,8 +432,8 @@ export const scheduleList = [
       name: "Aniversário",
       color: "#E6EA2D",
     },
-    receivedValue: 50,
-    price: 100,
+    agreedPrice: 100,
+    receivedPrice: 50,
     note: "O bolo deve ter recheio de coco com brigadeiro, a cor do bolo é branca mas pode ter detalhes dourados",
     items: [
       {
