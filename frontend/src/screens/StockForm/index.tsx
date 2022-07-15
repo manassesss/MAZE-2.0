@@ -8,10 +8,12 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  Keyboard,
   ScrollView,
   TextInput,
   View,
   Image,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
@@ -81,82 +83,90 @@ const StockForm = () => {
   // };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior={"position"}>
-        <ScrollView style={styles.containerContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={require("../../../assets/Grocer2.png")}
-              style={{ width: SCREEN_WIDTH * 0.6, height: SCREEN_WIDTH * 0.6 }}
-            />
-          </View>
+    <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView behavior={"position"}>
           <View>
-            <Text style={styles.inputText}>Nome do produto</Text>
-            <TextInput
-              onChangeText={(e) => setName(e)}
-              value={name}
-              style={styles.input}
-              placeholder="Nome do produto"
-            />
-            <Text style={styles.inputText}>Valor unitário</Text>
-            <MaskedTextInput
-              type="currency"
-              options={{
-                prefix: "R$",
-                decimalSeparator: ".",
-                groupSeparator: ",",
-                precision: 2,
-              }}
-              keyboardType="numeric"
-              onChangeText={(text, rawText) =>
-                setPrice(parseFloat(rawText) / 100)
-              }
-              value={price.toString()}
-              style={styles.input}
-              placeholder="Valor unitário"
-            />
-            <Text style={styles.inputText}>Quantidade</Text>
-            <View style={[styles.twoInputsContainer]}>
-              <View style={styles.picker}>
-                <RNPickerSelect
-                  style={{
-                    inputIOSContainer: {
-                      padding: 20,
-                    },
-                  }}
-                  onValueChange={(value) => setSelected(value)}
-                  items={measurementType}
-                />
-              </View>
-              <TextInput
-                keyboardType="numeric"
-                onChangeText={(e) => {
-                  if (isNaN(parseInt(e))) setAmount(0);
-                  else setAmount(parseInt(e));
+            <View style={styles.imageContainer}>
+              <Image
+                source={require("../../../assets/Grocer2.png")}
+                style={{
+                  width: SCREEN_WIDTH * 0.6,
+                  height: SCREEN_WIDTH * 0.6,
                 }}
-                value={amount.toString()}
-                style={[
-                  styles.input,
-                  {
-                    width: width * 0.15,
-                  },
-                ]}
-                placeholder="Quantidade"
               />
-              <View style={[styles.twoInputsContainer]}>
-                <ButtonIcon
-                  onPress={reduceAmount}
-                  type="remove"
-                  icon="remove"
-                />
-                <ButtonIcon onPress={addAmount} type="add" icon="add" />
-              </View>
             </View>
-            <ButtonAdd onPress={onFinish} title={"Salvar"} color="#F07B77" />
+            <View>
+              <Text style={styles.inputText}>Nome do produto</Text>
+              <TextInput
+                onChangeText={(e) => setName(e)}
+                value={name}
+                style={styles.input}
+                placeholder="Nome do produto"
+              />
+              <Text style={styles.inputText}>Valor unitário</Text>
+              <MaskedTextInput
+                type="currency"
+                options={{
+                  prefix: "R$",
+                  decimalSeparator: ".",
+                  groupSeparator: ",",
+                  precision: 2,
+                }}
+                keyboardType="numeric"
+                onChangeText={(text, rawText) =>
+                  setPrice(parseFloat(rawText) / 100)
+                }
+                value={price.toString()}
+                style={styles.input}
+                placeholder="Valor unitário"
+              />
+              <Text style={styles.inputText}>Quantidade</Text>
+              <View style={[styles.twoInputsContainer]}>
+                <View style={[styles.picker, { width: "50%" }]}>
+                  <RNPickerSelect
+                    useNativeAndroidPickerStyle
+                    style={{
+                      inputIOSContainer: {
+                        padding: 20,
+                      },
+                    }}
+                    onValueChange={(value) => setSelected(value)}
+                    items={measurementType}
+                  />
+                </View>
+                <View style={[styles.twoInputsContainer]}>
+                  <TextInput
+                    keyboardType="numeric"
+                    onChangeText={(e) => {
+                      if (isNaN(parseInt(e))) setAmount(0);
+                      else setAmount(parseInt(e));
+                    }}
+                    value={amount.toString()}
+                    style={[
+                      styles.input,
+                      {
+                        width: width * 0.15,
+                      },
+                    ]}
+                    placeholder="Quantidade"
+                  />
+                  <View style={[styles.twoInputsContainer]}>
+                    <ButtonIcon
+                      onPress={reduceAmount}
+                      type="remove"
+                      icon="remove"
+                    />
+                    <ButtonIcon onPress={addAmount} type="add" icon="add" />
+                  </View>
+                </View>
+              </View>
+              <ButtonAdd onPress={onFinish} title={"Salvar"} color="#F07B77" />
+            </View>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 
@@ -164,6 +174,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+    paddingHorizontal: SCREEN_WIDTH * 0.05,
   },
   containerContainer: {
     marginHorizontal: SCREEN_WIDTH * 0.05,
@@ -191,17 +202,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 45,
-    padding: 20,
-    width: width * 0.4,
+    padding: 10,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#373737",
+    backgroundColor: "#F9F9F9",
+    marginVertical: SCREEN_WIDTH * 0.04,
   },
   input: {
     height: 45,
     marginVertical: SCREEN_WIDTH * 0.04,
-    borderWidth: 1,
     borderRadius: 10,
+    backgroundColor: "#F9F9F9",
     padding: 10,
   },
 });

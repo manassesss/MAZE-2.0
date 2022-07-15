@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   normalButton: {
-    height: 50,
-    width: 50,
+    height: 45,
+    width: 45,
 
     borderRadius: 10,
     backgroundColor: "#F5F5F5",

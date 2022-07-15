@@ -6,37 +6,32 @@ export const productsList = [
   },
   {
     id: 2,
-    name: "Torta de Maracujá",
+    name: "Torta",
     type: 0,
   },
   {
     id: 3,
-    name: "Torta de Abacaxi",
+    name: "Lasanha",
     type: 0,
   },
   {
     id: 4,
-    name: "Torta Gelada",
+    name: "Cupcake",
     type: 0,
   },
   {
     id: 5,
-    name: "Coxinha",
-    type: 1,
+    name: "Brigadeiro ",
+    type: 0,
   },
   {
     id: 6,
-    name: "Empada",
-    type: 1,
+    name: "Bolo de Pote ",
+    type: 0,
   },
   {
     id: 7,
-    name: "Torta de Frango",
-    type: 1,
-  },
-  {
-    id: 8,
-    name: "Pastel",
-    type: 1,
+    name: "Creme de Galinha ",
+    type: 0,
   },
 ];
